@@ -40,6 +40,9 @@ namespace StockPurchaseDictionary
             Console.ReadKey();
 
             // Iterate over the purchases and update the valuation for each stock
+
+            Dictionary<string, string> report = new Dictionary<string, string>();
+
             foreach ((string ticker, int shares, double price) purchase in purchases)
             {
                 
