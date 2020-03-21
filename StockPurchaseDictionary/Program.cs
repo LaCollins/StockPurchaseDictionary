@@ -39,8 +39,10 @@ namespace StockPurchaseDictionary
 
             Console.ReadKey();
 
+            // Iterate over the purchases and update the valuation for each stock
             foreach ((string ticker, int shares, double price) purchase in purchases)
             {
+                
                 // Does the company name key already exist in the report dictionary?
                 // If it does, update the total valuation
                 // If not, add the new key and set its value
