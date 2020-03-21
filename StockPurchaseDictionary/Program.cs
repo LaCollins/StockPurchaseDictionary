@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StockPurchaseDictionary
 {
@@ -7,6 +8,8 @@ namespace StockPurchaseDictionary
     {
         static void Main(string[] args)
         {
+            Dictionary<string, double> purchaseInfo = new Dictionary<string, double>();
+
             Dictionary<string, string> stocks = new Dictionary<string, string>();
             stocks.Add("NFLX", "Netflix");
             stocks.Add("CYBR", "CyberArk Software");
@@ -21,14 +24,21 @@ namespace StockPurchaseDictionary
             purchases.Add((ticker: "ATVI", shares: 50, price: 100.50));
             purchases.Add((ticker: "ATVI", shares: 32, price: 80.19));
 
-            //Create a total ownership report that computes the total value of each stock that you have purchased.
-            //This is the basic relational database join algorithm between two tables.
+            foreach (var stock in stocks)
+            {
+                var stockTicker = stock.Key;
+                var priceSum = purchases.Where(purchase => purchase.ticker == stockTicker).Select(purchase => purchase.price).Sum();
+                var shareSum = purchases.Where(purchase => purchase.ticker == stockTicker).Select(purchase => purchase.shares).Sum();
+                purchaseInfo.Add(stock.Value, Math.Round(priceSum * shareSum));
+            }
 
-            /*
-             * Define a new Dictionary to hold the aggregated purchase information. - The key should be a string that is the full company name.
-             * The value will be the valuation of each stock (price*amount) { "General Electric": 35900, "AAPL": 8445, ... }
-            */
-            // Iterate over the purchases and update the valuation for each stock
+            foreach (var purchasedStock in purchaseInfo)
+            {
+                Console.WriteLine($"{purchasedStock.Key}: {purchasedStock.Value}");
+            }
+
+            Console.ReadKey();
+
             foreach ((string ticker, int shares, double price) purchase in purchases)
             {
                 // Does the company name key already exist in the report dictionary?
