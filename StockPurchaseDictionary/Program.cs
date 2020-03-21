@@ -37,19 +37,20 @@ namespace StockPurchaseDictionary
                 Console.WriteLine($"{purchasedStock.Key}: {purchasedStock.Value}");
             }
 
-            Console.ReadKey();
-
             // Iterate over the purchases and update the valuation for each stock
 
-            Dictionary<string, string> report = new Dictionary<string, string>();
+            Dictionary<string, List<(string, int, double)>> report = new Dictionary<string, List<(string, int, double)>>();
 
             foreach ((string ticker, int shares, double price) purchase in purchases)
             {
-                
+                var stockName = stocks[purchase.ticker];
+                report.Add(stockName, purchase);
                 // Does the company name key already exist in the report dictionary?
                 // If it does, update the total valuation
                 // If not, add the new key and set its value
             }
+
+            Console.ReadKey();
         }
     }
 }
